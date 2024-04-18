@@ -5,11 +5,15 @@ import { AiFillGithub } from 'react-icons/ai';
 import {FcGoogle} from 'react-icons/fc';
 import { useCallback, useState } from 'react';
 import {FieldValues, SubmitHandler, useForm, useFormContext} from 'react-hook-form';
-import useRegisterModal from '../hooks/useRegisterModal';
-import Modal from './modal';
+import useRegisterModal from '../../hooks/useRegisterModal';
+
 import Heading from '../Heading';
 import Input from '../inputs/Input';
 import { Island_Moments } from 'next/font/google';
+import toast from 'react-hot-toast';
+import Modal from './Modal';
+import Button from '../Button';
+
 
 
 const RegisterModal = () => {
@@ -36,7 +40,7 @@ const RegisterModal = () => {
 
         })
         .catch((errors)=>{
-            console.log(errors);
+           toast.error("Something went wrong");
         })
         .finally(()=>{
             setIsLoading(false);
@@ -57,10 +61,61 @@ const RegisterModal = () => {
             errors={errors}
             required
             />
+            <Input
+            id ='name'
+            label='Name'
+            disabled = {isLoading}
+            register={register}
+            errors={errors}
+            required
+            />
+            <Input
+            id ='password'
+            label='Password'
+            type='password'
+            disabled = {isLoading}
+            register={register}
+            errors={errors}
+            required
+            />
         </div>
 
     )
 
+    const footerContent = (
+        <div className='flex flex-col gap-4 mt-3'>
+            <hr/>
+            <Button 
+            outline
+            label='Continue with Google'
+            icon={FcGoogle}
+            onClick={()=> {}}
+            />
+            <Button 
+            outline
+            label='Continue with Github'
+            icon={AiFillGithub}
+            onClick={()=> {}}
+            />
+            <div className='text-neutral-500 text-center mt-4 font-light'>
+                <div className='justify-center flex flex-row items-center gap-2'>
+                    <div>
+                        Already have an account?
+                    </div>
+                    <div
+                    onClick={registerModal.onClose}
+                     className='
+                     text-neutral-500
+                     cursor-pointer
+                     hover:underline
+
+                    '>
+                        Log in
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
 
   return (
     <Modal
@@ -71,6 +126,7 @@ const RegisterModal = () => {
     onClose={registerModal.onClose}
     onSubmit={handleSubmit(onSubmit)}
     body={bodyContent}
+    footer={footerContent}
     />
     
   )

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
-import Modal from "./components/modals/modal";
 import RegisterModal from "./components/modals/RegisterModal";
+import ToastedProvider from "./providers/ToastedProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 const font = Nunito({
@@ -23,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
+        <ToastedProvider/>
         <RegisterModal/>
         <Navbar/>
         {children}
